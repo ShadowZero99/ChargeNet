@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Charge Net</title>
+
+    <style type="text/css">
+      @media (max-width: 767px) {
+        /* Add styles here */
+        #map {
+          height: 400px;
+          width: 100%;
+        }
+        #locations-list {
+          margin-top: 20px;
+          list-style: none;
+          padding: 0;
+        }
+        #locations-list li {
+          margin-bottom: 5px;
+        }
+        /* #data-box {
+        position: absolute;
+        top: 200px;
+        left: 20px;
+        background-color: white;
+        padding: 50px;
+      } */
+        #button1 {
+          background: linear-gradient(90.03deg, #0ab4cf -0.64%, #4b7cc6 99.97%);
+          color: #e6f111;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          border-radius: 10px;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 24px;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 10px;
+          width: 100px;
+          height: 50px;
+          margin-top: 50px;
+          margin-left: 10px;
+        }
+        #load-more-btn {
+          background: none;
+          color: #939495;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          border-radius: 10px;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          margin-right: 120px;
+          margin-left: 1120px;
+        }
+        #button3 {
+          background: #f6f6f6;
+          color: #939495;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 24px;
+          box-shadow: none;
+          border-radius: 10px;
+          width: 110px;
+          height: 50px;
+        }
+
+        .item-image {
+          margin-right: 10px;
+        }
+        .item-image img {
+          width: 15px; /* adjust the width as needed */
+          height: 20px; /* adjust the height as needed */
+          object-fit: cover;
+        }
+        .item-content {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .item-card {
+          border: none;
+          padding: 10px;
+          margin-bottom: 20px;
+          font-family: "Poppins";
+          display: flex;
+          align-items: center;
+          text-align: center;
+          border-radius: 10px;
+          height: 60px;
+
+          background-color: #f6f6f6;
+        }
+        .item-heading {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          font-size: 8px;
+          font-weight: 600;
+          font-family: "Poppins";
+          line-height: 21px;
+          font-style: normal;
+          color: #777d87;
+        }
+        .item-details {
+          display: flex;
+          align-items: center;
+          text-align: left;
+          font-size: 7px;
+          font-weight: 400;
+          font-family: "Poppins";
+          line-height: 18px;
+          font-style: normal;
+          color: #939495;
+        }
+
+        #item-list {
+          align-items: left;
+          overflow-x: scroll;
+          max-height: 350px;
+          margin-top: 50px;
+          /* columns: 2; */
+          column-gap: 20px; /* add some gap between the columns */
+        }
+        #item-list2 {
+          overflow-x: scroll;
+          max-height: 350px;
+          align-items: left;
+          margin-top: 50px;
+          /* columns: 2; display the list in two columns */
+          column-gap: 20px; /* add some gap between the columns */
+        }
+
+        /* Set the width and height of the scrollbar */
+
+        /* Set the color of the scrollbar track */
+
+        .item-list-container2 {
+          margin-top: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .item-list-container {
+          margin-top: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+
+      /* Styles for screens larger than 768px */
+      @media (min-width: 768px) {
+        /* Add styles here */
+        #map {
+          height: 400px;
+          width: 100%;
+        }
+        #locations-list {
+          margin-top: 20px;
+          list-style: none;
+          padding: 0;
+        }
+        #locations-list li {
+          margin-bottom: 5px;
+        }
+        /* #data-box {
+        position: absolute;
+        top: 200px;
+        left: 20px;
+        background-color: white;
+        padding: 50px;
+      } */
+        #button1 {
+          background: linear-gradient(90.03deg, #0ab4cf -0.64%, #4b7cc6 99.97%);
+          color: #e6f111;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          border-radius: 10px;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 10px;
+          width: 274px;
+          height: 50px;
+          margin-top: 50px;
+          margin-left: 120px;
+        }
+        #load-more-btn {
+          background: none;
+          color: #939495;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          border-radius: 10px;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          margin-right: 120px;
+          margin-left: 1120px;
+        }
+        #button3 {
+          background: #f6f6f6;
+          color: #939495;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          box-shadow: none;
+          border-radius: 10px;
+          width: 274px;
+          height: 50px;
+        }
+
+        .item-image {
+          margin-right: 10px;
+        }
+        .item-image img {
+          width: 25px; /* adjust the width as needed */
+          height: 35px; /* adjust the height as needed */
+          object-fit: cover;
+        }
+        .item-content {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .item-card {
+          border: none;
+          padding: 10px;
+          margin-bottom: 20px;
+          font-family: "Poppins";
+          display: flex;
+          align-items: center;
+          text-align: center;
+          border-radius: 10px;
+          background-color: #f6f6f6;
+        }
+        .item-heading {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          font-family: "Poppins";
+          line-height: 21px;
+          font-style: normal;
+          color: #777d87;
+        }
+        .item-details {
+          display: flex;
+          align-items: center;
+          text-align: left;
+          font-size: 12px;
+          font-weight: 400;
+          font-family: "Poppins";
+          line-height: 18px;
+          font-style: normal;
+          color: #939495;
+        }
+
+        #item-list {
+          align-items: left;
+          overflow-x: scroll;
+          max-height: 350px;
+          margin-top: 50px;
+          columns: 2;
+          column-gap: 20px; /* add some gap between the columns */
+        }
+        #item-list2 {
+          overflow-x: scroll;
+          max-height: 350px;
+          align-items: left;
+          margin-top: 50px;
+          columns: 2; /* display the list in two columns */
+          column-gap: 20px; /* add some gap between the columns */
+        }
+
+        /* Set the width and height of the scrollbar */
+
+        /* Set the color of the scrollbar track */
+
+        .item-list-container2 {
+          margin-top: 10px;
+          margin-left: 120px;
+          margin-right: 120px;
+        }
+        .item-list-container {
+          margin-top: 10px;
+          margin-left: 120px;
+          margin-right: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <ul id="locations"></ul>
+    <ul id="locations-list"></ul>
+
+    <!-- <div id="data-box"></div> -->
+    <button id="button1" onclick="toggleList()">AVAILABLE</button>
+
+    <button id="button3" onclick="toggleList2()">OCCUPIED</button>
+    <div class="item-list-container">
+      <div id="item-list"></div>
+    </div>
+    <div class="item-list-container2">
+      <div id="item-list2" style="display: none">
+        <!-- repeat the above item-card div for each item in your list -->
+      </div>
+    </div>
+
+    <!-- <button id="load-more-btn">See all</button> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function initMap() {
+        // Set the coordinates for the center of the map (Colombo, Sri Lanka)
+        var centerCoords = { lat: 6.9271, lng: 79.8612 };
+
+        // Create the map object and set its center and zoom level
+        var map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: centerCoords,
+          styles: [
+            {
+              featureType: "all",
+              elementType: "labels.text.fill",
+              stylers: [
+                {
+                  saturation: 36,
+                },
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 40,
+                },
+              ],
+            },
+            {
+              featureType: "all",
+              elementType: "labels.text.stroke",
+              stylers: [
+                {
+                  visibility: "on",
+                },
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 16,
+                },
+              ],
+            },
+            {
+              featureType: "all",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "administrative",
+              elementType: "geometry.fill",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 20,
+                },
+              ],
+            },
+            {
+              featureType: "administrative",
+              elementType: "geometry.stroke",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 17,
+                },
+                {
+                  weight: 1.2,
+                },
+              ],
+            },
+            {
+              featureType: "administrative",
+              elementType: "labels",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.country",
+              elementType: "labels.text",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.province",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.locality",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+                {
+                  saturation: "-100",
+                },
+                {
+                  lightness: "30",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.neighborhood",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "administrative.land_parcel",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "landscape",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+                {
+                  gamma: "0.00",
+                },
+                {
+                  lightness: "74",
+                },
+              ],
+            },
+            {
+              featureType: "landscape",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 20,
+                },
+              ],
+            },
+            {
+              featureType: "landscape.man_made",
+              elementType: "all",
+              stylers: [
+                {
+                  lightness: "3",
+                },
+              ],
+            },
+            {
+              featureType: "poi",
+              elementType: "all",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 21,
+                },
+              ],
+            },
+            {
+              featureType: "road",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "simplified",
+                },
+              ],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "geometry.fill",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 17,
+                },
+              ],
+            },
+            {
+              featureType: "road.highway",
+              elementType: "geometry.stroke",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 29,
+                },
+                {
+                  weight: 0.2,
+                },
+              ],
+            },
+            {
+              featureType: "road.arterial",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 18,
+                },
+              ],
+            },
+            {
+              featureType: "road.local",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 16,
+                },
+              ],
+            },
+            {
+              featureType: "transit",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 19,
+                },
+              ],
+            },
+            {
+              featureType: "water",
+              elementType: "geometry",
+              stylers: [
+                {
+                  color: "#000000",
+                },
+                {
+                  lightness: 17,
+                },
+              ],
+            },
+          ],
+        });
+        const infoWindow = new google.maps.InfoWindow();
+        fetch(
+          "http://api.chargenet.lk:13000/ChargerHandler.asmx/ShowAllChargePointData"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const listOfChargePoints = data.listOfChargePoints;
+
+            const availability_status = [];
+
+            for (let i = 0; i < listOfChargePoints.length; i++) {
+              const reference = listOfChargePoints[i].reference;
+              const location = listOfChargePoints[i].location;
+              const address = listOfChargePoints[i].address;
+              const opening_hours = listOfChargePoints[i].opening_hours;
+              const longitude = listOfChargePoints[i].longitude;
+              const latitude = listOfChargePoints[i].latitude;
+              const type = listOfChargePoints[i].type;
+              const mobile = listOfChargePoints[i].mobile;
+              const availability_status =
+                listOfChargePoints[i].availability_status;
+              const myLatLng = {
+                lat: listOfChargePoints[i].latitude,
+                lng: listOfChargePoints[i].longitude,
+              };
+
+              var iconn = [];
+              var iconnlist = [];
+
+              if (availability_status == "AVAILABLE") {
+                if (type == "L3") {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3available.png";
+                } else {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2available.png";
+                }
+              } else if (availability_status == "OCCUPIED") {
+                if (type == "L3") {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3occuiped.png";
+                } else {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2occupied.png";
+                }
+              } else {
+                if (type == "L3") {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3unavailable.png";
+                } else {
+                  iconn =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2unavailable.png";
+                }
+              }
+
+              if (availability_status == "AVAILABLE") {
+                if (type == "L3") {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3available-list.png";
+                } else {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2available-list.png";
+                }
+              } else if (availability_status == "OCCUPIED") {
+                if (type == "L3") {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3occuiped-list.png";
+                } else {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2occupied-list.png";
+                }
+              } else {
+                if (type == "L3") {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l3unavailable-list.png";
+                } else {
+                  iconnlist =
+                    "http://52.42.105.180/wp-content/uploads/2023/02/l2unavailable-list.png";
+                }
+              }
+              if (availability_status == "AVAILABLE") {
+                var itemList = document.getElementById("item-list");
+
+                var itemCard = document.createElement("div");
+                itemCard.className = "item-card";
+                var itemImage = document.createElement("div");
+                itemImage.className = "item-image";
+                var itemImageSrc = document.createElement("img");
+                itemImageSrc.src = iconnlist;
+                itemImage.appendChild(itemImageSrc);
+                var itemContent = document.createElement("div");
+                itemContent.className = "item-content";
+                var itemHeading = document.createElement("div");
+                itemHeading.className = "item-heading";
+                itemHeading.textContent = location;
+                var itemDetails = document.createElement("div");
+                itemDetails.className = "item-details";
+                itemDetails.textContent = address;
+                itemContent.appendChild(itemHeading);
+                itemContent.appendChild(itemDetails);
+                itemCard.appendChild(itemImage);
+                itemCard.appendChild(itemContent);
+                itemList.appendChild(itemCard);
+              } else {
+                var itemList = document.getElementById("item-list2");
+
+                var itemCard = document.createElement("div");
+                itemCard.className = "item-card";
+                var itemImage = document.createElement("div");
+                itemImage.className = "item-image";
+                var itemImageSrc = document.createElement("img");
+                itemImageSrc.src = iconnlist;
+                itemImage.appendChild(itemImageSrc);
+                var itemContent = document.createElement("div");
+                itemContent.className = "item-content";
+                var itemHeading = document.createElement("div");
+                itemHeading.className = "item-heading";
+                itemHeading.textContent = location;
+                var itemDetails = document.createElement("div");
+                itemDetails.className = "item-details";
+                itemDetails.textContent = address;
+                itemContent.appendChild(itemHeading);
+                itemContent.appendChild(itemDetails);
+                itemCard.appendChild(itemImage);
+                itemCard.appendChild(itemContent);
+                itemList.appendChild(itemCard);
+              }
+              const coord = { lat: Number(latitude), lng: Number(longitude) };
+              const content = createInfoWindowContent(
+                location,
+                reference,
+                address,
+                availability_status,
+                myLatLng,
+                opening_hours,
+                longitude,
+                latitude,
+                type,
+                mobile
+              );
+
+              var marker = new google.maps.Marker({
+                position: coord,
+                map: map,
+                title: location,
+                avialable: availability_status,
+                icon: iconn,
+              });
+
+              marker.addListener("click", () => {
+                infoWindow.setContent(content);
+                infoWindow.open(map, marker);
+                infoWindow.setPosition({
+                  lat: Number(latitude),
+                  lng: Number(longitude),
+                });
+              });
+
+              function createInfoWindowContent(
+                location,
+                reference,
+                address,
+                availability_status,
+                myLatLng,
+                opening_hours,
+                longitude,
+                latitude,
+                type,
+                mobile
+              ) {
+                map.setCenter();
+
+                return `
+
+                      <table style="border: none; text-align: left;">
+        <tr>
+          <th scope="col" style="text-align: left">
+            <div style="font-size:18px;"><strong>${location}</strong></div>
+          </th>
+          <th scope="col" style="text-align: center">
+
+
+              <?php if (${availability_status} == "AVAILABLE"): ?>
+              <b><span style="color:green">${availability_status}</span></b>
+
+            <?php endif; ?>
+
+
+          </th>
+        </tr>
+        <tr>
+          <th scope="row" style="text-align: left">
+            <div>${address}</div>
+            <div>Reference No : ${reference}</div>
+            <div>Opening_hours : ${opening_hours}</div>
+            <div>Type : ${type}</div>
+            <div>Mobile Number : ${mobile}</div>
+          </th>
+          <td style="text-align: center">
+            <div>
+              <img src="${iconn}" alt="Girl in a jacket" width="50" height="50">
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      `;
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+    </script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdclCBZ2JEX1vdta5LgPiDcCB9jdFprCI&callback=initMap"
+      async
+      defer
+    ></script>
+    <script type="text/javascript">
+      var itemsToShow = 3; // Show the first 10 items by default
+      var itemsIncrement = 10; // Add 5 more items each time the button is clicked
+
+      $(document).ready(function () {
+        // Hide all items beyond the initial itemsToShow
+        $("#item-list .item-card:gt(" + (itemsToShow - 1) + ")").hide();
+
+        // Add click event handler to the "Load More" button
+        $("#load-more-btn").click(function () {
+          // Show additional items
+          itemsToShow += itemsIncrement;
+          $("#item-list .item-card:lt(" + itemsToShow + ")").show();
+
+          // Hide the button if all items are shown
+          if (itemsToShow >= $("#item-list .item-card").length) {
+            $("#load-more-btn").hide();
+          }
+        });
+      });
+
+      $("#item-list").show();
+      function toggleList() {
+        $("#item-list").show();
+        $("#item-list2").hide();
+
+        if ($("#button3").is(":visible")) {
+          $("#button3").css("background", "#F6F6F6");
+          $("#button3").css("color", "#939495");
+          $("#button3").css("box-shadow", "None");
+          $("#button1").css("box-shadow", "0px 4px 4px rgba(0, 0, 0, 0.25)");
+          $("#button1").css("color", "#e6f111");
+          $("#button1").css(
+            "background",
+            "linear-gradient(90.03deg, #0ab4cf -0.64%, #4b7cc6 99.97%)"
+          );
+        }
+      }
+      function toggleList2() {
+        $("#item-list2").show();
+        $("#item-list").hide();
+
+        if ($("#button3").is(":visible")) {
+          $("#button1").css("background", "#F6F6F6");
+          $("#button1").css("color", "#939495");
+          $("#button1").css("box-shadow", "None");
+          $("#button3").css("color", "#f6f6f6");
+          $("#button3").css("box-shadow", "0px 4px 4px rgba(0, 0, 0, 0.25)");
+          $("#button3").css(
+            "background",
+            "linear-gradient(102.59deg, #CC7070 40.92%, #FFFFFF 153.46%)"
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
